@@ -1,42 +1,103 @@
-import { extendType, objectType } from "nexus";
+import { extendType, objectType, enumType, nonNull, stringArg } from "nexus";
 import { NexusGenObjects } from "../../nexus-typegen";
 
 export const Link = objectType({
   name: "Question",
   definition(t) {
     t.nonNull.int("id");
-    t.nonNull.string("category");
+    t.nonNull.field("category", { type: CategoryEnum });
     t.nonNull.string("difficulty");
     t.nullable.string("hint");
-    t.nonNull.string("question");
+    t.nonNull.string("question_content");
     t.nonNull.string("correct_answer");
-    t.nonNull.string("wrong_answer");
+    t.list.nonNull.field("wrong_answers", {
+      type: "String",
+    });
+  },
+});
+
+const CategoryEnum = enumType({
+  name: "CategoryEnum",
+  members: {
+    ART: "Art",
+    BOOKS: "Books",
+    COMICS: "Comics",
+    COMPUTERS: "Computers",
+    FILM: "Film",
+    GAMES: "Games",
+    GENERAL_KNOWLEDGE: "General Knowledge",
+    GEOGRAPHY: "Geography",
+    HISTORY: "History",
+    MATHEMATICS: "Mathematics",
+    MUSIC: "Music",
+    MYTHOLOGY: "Mythology",
+    NATURE: "Nature",
+    POLITICS: "Politics",
+    SPORTS: "Sports",
+    TELEVISION: "Television",
   },
 });
 
 let questions: NexusGenObjects["Question"][] = [
-  // 1
   {
     id: 1,
     category: "General Knowledge",
     difficulty: "easy",
     hint: "This is a hint",
-    question: "What is the capital of France?",
+    question_content: "What is the capital of France?",
     correct_answer: "Paris",
-    wrong_answer: "London",
+    wrong_answers: ["London", "Berlin", "Rome"],
   },
 ];
 
 export const QuestionQuery = extendType({
-  // 2
   type: "Query",
   definition(t) {
     t.nonNull.list.nonNull.field("feed", {
-      // 3
       type: "Question",
       resolve(parent, args, context, info) {
-        // 4
         return questions;
+      },
+    });
+  },
+});
+
+export const LinkMutation = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.nonNull.field("post", {
+      type: "Question",
+      args: {
+        category: nonNull(stringArg()),
+        difficulty: nonNull(stringArg()),
+        hint: stringArg(),
+        question_content: nonNull(stringArg()),
+        correct_answer: nonNull(stringArg()),
+        wrong_answers: nonNull(stringArg()),
+      },
+
+      resolve(parent, args, context) {
+        const {
+          category,
+          correct_answer,
+          difficulty,
+          hint,
+          question_content,
+          wrong_answers,
+        } = args;
+
+        let idCount = questions.length + 1;
+        const question = {
+          category: category,
+          correct_answer: correct_answer,
+          difficulty: difficulty,
+          hint: hint,
+          id: idCount,
+          question_content: question_content,
+          wrong_answers: wrong_answers,
+        };
+        questions.push(question);
+        return question;
       },
     });
   },

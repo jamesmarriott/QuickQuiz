@@ -2,16 +2,39 @@
 ### Do not make changes to this file directly
 
 
+enum CategoryEnum {
+  ART
+  BOOKS
+  COMICS
+  COMPUTERS
+  FILM
+  GAMES
+  GENERAL_KNOWLEDGE
+  GEOGRAPHY
+  HISTORY
+  MATHEMATICS
+  MUSIC
+  MYTHOLOGY
+  NATURE
+  POLITICS
+  SPORTS
+  TELEVISION
+}
+
+type Mutation {
+  post(category: String!, correct_answer: String!, difficulty: String!, hint: String, question_content: String!, wrong_answers: String!): Question!
+}
+
 type Query {
   feed: [Question!]!
 }
 
 type Question {
-  category: String!
+  category: CategoryEnum!
   correct_answer: String!
   difficulty: String!
   hint: String
   id: Int!
-  question: String!
-  wrong_answer: String!
+  question_content: String!
+  wrong_answers: [String!]
 }

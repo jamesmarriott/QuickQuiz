@@ -17,6 +17,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  CategoryEnum: "Art" | "Books" | "Comics" | "Computers" | "Film" | "Games" | "General Knowledge" | "Geography" | "History" | "Mathematics" | "Music" | "Mythology" | "Nature" | "Politics" | "Sports" | "Television"
 }
 
 export interface NexusGenScalars {
@@ -28,15 +29,16 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Mutation: {};
   Query: {};
   Question: { // root type
-    category: string; // String!
+    category: NexusGenEnums['CategoryEnum']; // CategoryEnum!
     correct_answer: string; // String!
     difficulty: string; // String!
     hint?: string | null; // String
     id: number; // Int!
-    question: string; // String!
-    wrong_answer: string; // String!
+    question_content: string; // String!
+    wrong_answers?: string[] | null; // [String!]
   }
 }
 
@@ -48,39 +50,55 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Mutation: { // field return type
+    post: NexusGenRootTypes['Question']; // Question!
+  }
   Query: { // field return type
     feed: NexusGenRootTypes['Question'][]; // [Question!]!
   }
   Question: { // field return type
-    category: string; // String!
+    category: NexusGenEnums['CategoryEnum']; // CategoryEnum!
     correct_answer: string; // String!
     difficulty: string; // String!
     hint: string | null; // String
     id: number; // Int!
-    question: string; // String!
-    wrong_answer: string; // String!
+    question_content: string; // String!
+    wrong_answers: string[] | null; // [String!]
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Mutation: { // field return type name
+    post: 'Question'
+  }
   Query: { // field return type name
     feed: 'Question'
   }
   Question: { // field return type name
-    category: 'String'
+    category: 'CategoryEnum'
     correct_answer: 'String'
     difficulty: 'String'
     hint: 'String'
     id: 'Int'
-    question: 'String'
-    wrong_answer: 'String'
+    question_content: 'String'
+    wrong_answers: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    post: { // args
+      category: string; // String!
+      correct_answer: string; // String!
+      difficulty: string; // String!
+      hint?: string | null; // String
+      question_content: string; // String!
+      wrong_answers: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -93,7 +111,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
