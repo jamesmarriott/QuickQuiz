@@ -28,13 +28,16 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Link: { // root type
-    category: string; // String!
-    difficulty: string; // String!
-    hint: string; // String!
-    id: number; // Int!
-  }
   Query: {};
+  Question: { // root type
+    category: string; // String!
+    correct_answer: string; // String!
+    difficulty: string; // String!
+    hint?: string | null; // String
+    id: number; // Int!
+    question: string; // String!
+    wrong_answer: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -48,26 +51,32 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  Link: { // field return type
-    category: string; // String!
-    difficulty: string; // String!
-    hint: string; // String!
-    id: number; // Int!
-  }
   Query: { // field return type
-    feed: NexusGenRootTypes['Link'][]; // [Link!]!
+    feed: NexusGenRootTypes['Question'][]; // [Question!]!
+  }
+  Question: { // field return type
+    category: string; // String!
+    correct_answer: string; // String!
+    difficulty: string; // String!
+    hint: string | null; // String
+    id: number; // Int!
+    question: string; // String!
+    wrong_answer: string; // String!
   }
 }
 
 export interface NexusGenFieldTypeNames {
-  Link: { // field return type name
+  Query: { // field return type name
+    feed: 'Question'
+  }
+  Question: { // field return type name
     category: 'String'
+    correct_answer: 'String'
     difficulty: 'String'
     hint: 'String'
     id: 'Int'
-  }
-  Query: { // field return type name
-    feed: 'Link'
+    question: 'String'
+    wrong_answer: 'String'
   }
 }
 

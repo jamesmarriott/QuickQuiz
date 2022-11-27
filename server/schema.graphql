@@ -2,13 +2,16 @@
 ### Do not make changes to this file directly
 
 
-type Link {
-  category: String!
-  difficulty: String!
-  hint: String!
-  id: Int!
+type Query {
+  feed: [Question!]!
 }
 
-type Query {
-  feed: [Link!]!
+type Question {
+  category: String!
+  correct_answer: String!
+  difficulty: String!
+  hint: String
+  id: Int!
+  question: String!
+  wrong_answer: String!
 }
