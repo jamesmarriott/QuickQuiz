@@ -32,7 +32,7 @@ export interface NexusGenObjects {
   Mutation: {};
   Query: {};
   Question: { // root type
-    category: NexusGenEnums['CategoryEnum']; // CategoryEnum!
+    category?: NexusGenEnums['CategoryEnum'] | null; // CategoryEnum
     correct_answer: string; // String!
     difficulty: string; // String!
     hint?: string | null; // String
@@ -60,7 +60,7 @@ export interface NexusGenFieldTypes {
     feed: NexusGenRootTypes['Question'][]; // [Question!]!
   }
   Question: { // field return type
-    category: NexusGenEnums['CategoryEnum']; // CategoryEnum!
+    category: NexusGenEnums['CategoryEnum'] | null; // CategoryEnum
     correct_answer: string; // String!
     difficulty: string; // String!
     hint: string | null; // String

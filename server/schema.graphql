@@ -30,7 +30,7 @@ type Query {
 }
 
 type Question {
-  category: CategoryEnum!
+  category: CategoryEnum
   correct_answer: String!
   difficulty: String!
   hint: String

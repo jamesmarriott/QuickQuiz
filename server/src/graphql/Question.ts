@@ -5,7 +5,7 @@ export const Link = objectType({
   name: "Question",
   definition(t) {
     t.nonNull.int("id");
-    t.nonNull.field("category", { type: CategoryEnum });
+    t.field("category", { type: CategoryEnum });
     t.nonNull.string("difficulty");
     t.nullable.string("hint");
     t.nonNull.string("question_content");
@@ -76,19 +76,20 @@ export const LinkMutation = extendType({
         wrong_answers: nonNull(stringArg()),
       },
 
-      resolve(parent, args, context) {
+      resolve(_, args, __) {
         const {
-          category,
+          category: CategoryEnum,
           correct_answer,
           difficulty,
           hint,
+          id,
           question_content,
           wrong_answers,
-        } = args;
+        } = args as unknown as NexusGenObjects["Question"];
 
         let idCount = questions.length + 1;
         const question = {
-          category: category,
+          category: CategoryEnum,
           correct_answer: correct_answer,
           difficulty: difficulty,
           hint: hint,
