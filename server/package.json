@@ -1,7 +1,7 @@
 {
-  "name": "catstronauts-server-complete",
+  "name": "quickQuiz",
   "version": "1.0.0",
-  "description": "back-end demo app for Apollo's lift-off course",
+  "description": "back end for quickQuiz",
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,7 +20,7 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.9.3"
   },
-  "author": "Raphael Terrier @R4ph-t",
+  "author": "James Marrriott",
   "license": "MIT",
   "private": true
 }
