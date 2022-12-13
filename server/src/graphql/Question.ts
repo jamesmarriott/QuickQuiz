@@ -38,7 +38,7 @@ const CategoryEnum = enumType({
   },
 });
 
-let questions: NexusGenObjects["Question"][] = [
+const questions: NexusGenObjects["Question"][] = [
   {
     id: 1,
     category: "General Knowledge",
